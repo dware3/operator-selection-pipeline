@@ -1,0 +1,6 @@
+product.product_code,assigned_operator,std_downtime_rate,mean_downtime_rate,runs,confidence,explanation
+LE-600,Mac,0.031492,0.418182,3,low,Assigned based on lowest downtime-rate variability.
+CO-600,Charlie,0.114609,0.322894,5,moderate,Assigned based on lowest downtime-rate variability.
+CO-2L,Dennis,,0.355263,1,very low,Assigned based on lowest downtime-rate variability.
+DC-600,Dee,,0.25,1,very low,Assigned based on lowest downtime-rate variability.
+OR-600,unassigned,,,0,none,No available operator remaining.

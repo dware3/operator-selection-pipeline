@@ -1,0 +1,2 @@
+station,assigned_operator,std_downtime_rate,mean_downtime_rate,runs,confidence,explanation
+station_1,Dennis,0.129649,0.359651,5,moderate,Assigned based on lowest downtime-rate variability for this station.

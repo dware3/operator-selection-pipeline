@@ -1,0 +1,162 @@
+schema_version: "1.3"
+
+# ============================================================
+# RUN
+# ============================================================
+
+run:
+  type: object
+  description: Identifiers for a production run
+
+  run_id:
+    type: string
+    description: Unique identifier for a production run
+
+
+# ============================================================
+# PRODUCTION
+# ============================================================
+
+production:
+  type: object
+  description: Calendar metadata for production
+
+  production_date:
+    type: date
+    description: Calendar date of production
+
+
+# ============================================================
+# PRODUCT
+# ============================================================
+
+product:
+  type: object
+  description: Product associated with the run
+
+  product_code:
+    type: string
+    description: Product identifier used to join product attributes
+
+  quantity_produced:
+    type: number
+    description: Quantity produced during the run
+    
+  min_quantity:
+    type: number
+    description: Minimum productions during the run
+
+  quantity_unit:
+    type: string
+    description: Unit of production quantity (e.g., ml, L)
+
+
+# ============================================================
+# TIMING
+# ============================================================
+
+timing:
+  type: object
+  description: Timing information for the run
+
+  start_time:
+    type: time
+    description: Time of day when the run started
+
+  end_time:
+    type: time
+    description: Time of day when the run ended
+
+  min_run_minutes:
+    type: number
+    description: Expected minimum run duration in minutes (planning input)
+
+
+# ============================================================
+# STATIONS (REPEATED)
+# ============================================================
+
+stations:
+  type: array
+  description: Station assignments for the run
+
+  items:
+    station:
+      type: string
+      description: Station identifier (e.g., Station 1)
+
+    operator_id:
+      type: string
+      description: Operator assigned to the station
+
+
+# ============================================================
+# DOWNTIME (FACTOR-BASED, REPEATED)
+# ============================================================
+
+downtime:
+  type: array
+  description: Downtime factors applied during the run
+
+  items:
+    factor_code:
+      type: string
+      description: Downtime factor identifier
+
+    minutes:
+      type: number
+      description: Downtime minutes attributed to this factor for the run
+
+    is_operator_error:
+      type: boolean
+      description: Whether this factor represents operator error
+
+
+# ============================================================
+# METRICS (DERIVED)
+# ============================================================
+
+metrics:
+  type: object
+  derived: true
+  description: Derived performance metrics
+
+  run_minutes:
+    type: number
+    derived: true
+    description: Actual runtime in minutes (date + time aware)
+
+  total_downtime_minutes:
+    type: number
+    derived: true
+    description: Sum of all downtime minutes
+
+  operator_error_minutes:
+    type: number
+    derived: true
+    description: Sum of downtime minutes attributed to operator error
+
+  overrun_minutes:
+    type: number
+    derived: true
+    description: run_minutes - min_run_minutes
+
+  efficiency_pct:
+    type: number
+    derived: true
+    description: (run_minutes - total_downtime_minutes) / run_minutes * 100
+
+
+# ============================================================
+# METADATA
+# ============================================================
+
+metadata:
+  type: object
+  description: Canonical dataset provenance
+
+  source_files:
+    type: array
+    items:
+      type: string
+    description: List of CSV source files used to build the dataset

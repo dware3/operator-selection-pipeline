@@ -1,0 +1,62 @@
+run:
+  run_id:
+    source_file: line-productivity.csv
+    field: Batch
+production:
+  production_date:
+    source_file: line-productivity.csv
+    field: Date
+product:
+  product_code:
+    source_file: line-productivity.csv
+    field: Product
+timing:
+  start_time:
+    source_file: line-productivity.csv
+    field: Start Time
+  end_time:
+    source_file: line-productivity.csv
+    field: End Time
+  min_run_minutes:
+    source_file: products.csv
+    field: Min batch time
+stations:
+  type: repeated
+  run_key:
+    source_file: line-productivity.csv
+    field: Batch
+  stations:
+  - station: Station 1
+    operator_id:
+      source_file: line-productivity.csv
+      field: Operator
+downtime:
+  type: repeated
+  run_key:
+    source_file: line-downtime.csv
+    field: Batch
+  factor_code:
+    source_file: downtime-factors.csv
+    field: Factor
+  minutes:
+    source_file: line-downtime.csv
+    derive_from: column_value
+  is_operator_error:
+    source_file: downtime-factors.csv
+    field: Operator Error
+metrics:
+  run_minutes:
+    derived: true
+    source: timing.end_time - timing.start_time
+  total_downtime_minutes:
+    derived: true
+    source: sum(downtime.minutes)
+  operator_error_minutes:
+    derived: true
+    source: sum(downtime.minutes where is_operator_error = true)
+metadata:
+  source_files:
+  - downtime-factors.csv
+  - line-downtime.csv
+  - line-productivity.csv
+  - products.csv
