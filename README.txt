@@ -34,7 +34,7 @@ Capstone-Operator-Selection-Pipeline/
 ├── tests/                  # Unit tests
 ├── run_pipeline.py         # Entry point
 ├── requirements.txt
-├── README.md
+├── README.txt
 └── pytest.ini
 ```
 
@@ -75,7 +75,7 @@ GET    /artifacts/{artifact_id}
 ```
 
 Interactive API docs available at:  
-[http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+[http://127.0.0.1:8000](http://127.0.0.1:8000)
 
 ## Getting Started
 
@@ -95,14 +95,14 @@ uvicorn app.main:app --reload
 
 Each pipeline run produces one or more CSV artifacts under pipeline/artifacts/, including:
 
--canonical_flat.csv — flattened canonical run-level data
--canonical_wide_validated.csv — validated wide-format dataset
--operator_product_downtime.csv — operator-level downtime aggregation
--operator_downtime_variability.csv — operator variability metrics
--operator_factor_tests.csv — statistical test results
--station_operator_assignments.csv — station-to-operator mappings
--product.product_code_operator_assignments.csv — product-level operator assignments
--metadata_mapping.yml — configuration used for the transformation
+.canonical_flat.csv — flattened canonical run-level data
+.canonical_wide_validated.csv — validated wide-format dataset
+.operator_product_downtime.csv — operator-level downtime aggregation
+.operator_downtime_variability.csv — operator variability metrics
+.operator_factor_tests.csv — statistical test results
+.station_operator_assignments.csv — station-to-operator mappings
+.product.product_code_operator_assignments.csv — product-level operator assignments
+.metadata_mapping.yml — configuration used for the transformation
 
 These artifacts are designed for downstream ML modeling and analysis. Each file represents a different view or aggregation of the canonical manufacturing data.
 
