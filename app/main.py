@@ -11,6 +11,8 @@ import pandas as pd
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse, RedirectResponse, FileResponse
 
+from typing import Optional
+
 # Matplotlib (headless-safe)
 import matplotlib
 matplotlib.use("Agg")
@@ -941,4 +943,5 @@ REPORT_HTML_TEMPLATE = """<!doctype html>
 def report_build_and_open():
     build_report()  # existing function — do not rewrite
     return RedirectResponse(url="/report/html", status_code=303)
+
 
