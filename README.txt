@@ -24,18 +24,15 @@ This system transforms heterogeneous manufacturing CSV inputs into a standardize
 ```
 Capstone-Operator-Selection-Pipeline/
 ├── app/                    # FastAPI application
-│   ├── main.py
-│   └── schemas.py
+│   └── main.py
 ├── pipeline/
 │   ├── steps/              # Modular pipeline steps
 │   └── artifacts/          # Output artifacts
 ├── configs/                # Schema and mapping definitions
 ├── data/                   # Raw input data (CSV)
-├── tests/                  # Unit tests
 ├── run_pipeline.py         # Entry point
 ├── requirements.txt
-├── README.txt
-└── pytest.ini
+└── README.txt
 ```
 
 ## Canonical Schema
