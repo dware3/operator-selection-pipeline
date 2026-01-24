@@ -6,8 +6,6 @@
 # - Builds operator assignments based on lowest downtime-rate variability
 # - Outputs: pipeline/artifacts/<assignment_field>_operator_assignments.csv
 
-from __future__ import annotations
-
 from pathlib import Path
 import re
 import pandas as pd
