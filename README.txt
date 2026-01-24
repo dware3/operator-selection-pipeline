@@ -62,24 +62,25 @@ Validated against the canonical schema for reproducibility.
 Run the FastAPI service to interact with the system:
 
 ```
-GET    /health
-GET    /schema
-POST   /upload
-GET    /files
-POST   /mapping
-POST   /export
-GET    /artifacts/{artifact_id}
+GET / # Home page with HTML form to trigger report build
+POST /report/build # Builds the report artifacts and saves them
+POST /report/build-and-open # Builds the report and redirects to HTML view
+GET /report/html # Returns the full HTML report for viewing
+GET /report/figures/{filename} # Serves generated figure PNGs
+GET /report/examples/{filename} # Serves synthetic/simulated example figures
 ```
 
 Interactive API docs available at:  
-[http://127.0.0.1:8000](http://127.0.0.1:8000)
+[http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
 
 ## Getting Started
 
 ```bash
 # Create and activate virtual environment
 python -m venv .venv
-source .venv/bin/activate  # Windows: .venv\Scripts\activate
+# Activate the virtual environment
+source .venv/bin/activate      # macOS/Linux
+.venv\Scripts\activate         # Windows
 
 # Install dependencies
 pip install -r requirements.txt
