@@ -1,0 +1,52 @@
+{
+  "generated_at_utc": "2026-01-24T02:10:27.936501+00:00",
+  "inputs": {
+    "canonical_wide_validated": {
+      "path": "/home/dware/Capstone/operator_selection_pipeline/pipeline/artifacts/canonical_wide_validated.csv",
+      "size": 4278,
+      "mtime": 1768943293,
+      "sha256_1mb": "c2b125f86ed14422078ef33ece40a0c37bfe71fefa13d1ee0d5921684ba712bc"
+    },
+    "operator_downtime_variability": {
+      "path": "/home/dware/Capstone/operator_selection_pipeline/pipeline/artifacts/operator_downtime_variability.csv",
+      "size": 210,
+      "mtime": 1768943299,
+      "sha256_1mb": "dab756f3e35d3a7cb5d5d54c04e0f9dbf601b78918113b63dbffed6d7f2823cd"
+    },
+    "operator_factor_tests": {
+      "path": "/home/dware/Capstone/operator_selection_pipeline/pipeline/artifacts/operator_factor_tests.csv",
+      "size": 539,
+      "mtime": 1768943299,
+      "sha256_1mb": "8938994252a57806d1dff57f68a469f081bf576c24285f53fb533c2830d24e6d"
+    },
+    "operator_product_downtime": {
+      "path": "/home/dware/Capstone/operator_selection_pipeline/pipeline/artifacts/operator_product_downtime.csv",
+      "size": 187,
+      "mtime": 1768943299,
+      "sha256_1mb": "bfd672a92063000bdca9f0f109fd8e6de7b28b6236032a2d68fbceb18e788c9d"
+    },
+    "product_product_code_operator_assignments": {
+      "path": "/home/dware/Capstone/operator_selection_pipeline/pipeline/artifacts/product.product_code_operator_assignments.csv",
+      "size": 513,
+      "mtime": 1768943305,
+      "sha256_1mb": "3124238e141b4c41b394981f8f1765f79874a543fde609eb6631a60d694ab970"
+    }
+  },
+  "outputs": {
+    "figures_dir": "/home/dware/Capstone/operator_selection_pipeline/pipeline/artifacts/report/figures",
+    "examples_dir": "/home/dware/Capstone/operator_selection_pipeline/pipeline/artifacts/report/examples",
+    "figures": [
+      "efficiency_by_operator.png",
+      "run_counts_by_operator.png",
+      "downtime_variability_by_operator.png",
+      "operator_factor_tests.png",
+      "product_operator_downtime.png",
+      "product_operator_assignment_summary.png"
+    ],
+    "examples": [
+      "example_clear_efficiency_by_operator.png",
+      "example_clear_downtime_variability_by_operator.png",
+      "example_clear_operator_factor_tests.png"
+    ]
+  }
+}
