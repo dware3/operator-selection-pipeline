@@ -1,12 +1,9 @@
 # app/main.py
-from __future__ import annotations
-
 import json
 import hashlib
 import html
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Dict, Optional, Tuple, List
 
 import numpy as np
 import pandas as pd
@@ -108,7 +105,6 @@ def _require(path: Path, label: str) -> None:
     if not path.exists():
         raise HTTPException(status_code=404, detail=f"{label} not found: {path}")
 
-
 def _file_fingerprint(path: Optional[Path]) -> Optional[Dict[str, Any]]:
     # Used only for the manifest (kept because your report prints inputs_pretty)
     if path is None or not path.exists():
@@ -123,7 +119,6 @@ def _file_fingerprint(path: Optional[Path]) -> Optional[Dict[str, Any]]:
         "mtime": int(st.st_mtime),
         "sha256_1mb": h.hexdigest(),
     }
-
 
 def _read_csv(path: Path, label: str) -> pd.DataFrame:
     _require(path, label)
@@ -544,54 +539,6 @@ def fig_example_factor_tests_strong_signal(ft_df: pd.DataFrame) -> plt.Figure:
 
 
 # -----------------------------------------------------------------------------
-# Simplified UI: ONE button → build → open report
-# -----------------------------------------------------------------------------
-@app.get("/", response_class=HTMLResponse)
-def home():
-    return HTMLResponse(
-        content="""
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Operator Selection Report</title>
-  <style>
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; margin:0; background:#fff; color:#111; }
-    .wrap { max-width: 720px; margin: 0 auto; padding: 48px 18px; }
-    .card { background:#f7f7f8; border:1px solid #e6e6e9; border-radius: 12px; padding: 20px; }
-    h1 { margin:0 0 10px; font-size: 22px; }
-    p { margin:8px 0 16px; color:#555; line-height:1.45; }
-    button { border:0; background:#0b57d0; color:#fff; border-radius:10px; padding:12px 16px; font-size:14px; cursor:pointer; }
-    button:hover { filter: brightness(0.95); }
-    .small { font-size:12px; color:#666; margin-top:12px; }
-  </style>
-</head>
-<body>
-  <div class="wrap">
-    <div class="card">
-      <h1>Operator Selection Pipeline</h1>
-      <p>One click: build the latest report and open the HTML report.</p>
-      <form action="/report/build-and-open" method="post" target="_blank">
-        <button type="submit">Generate &amp; Open Report</button>
-      </form>
-      <div class="small">If nothing opens, allow pop-ups for localhost and retry.</div>
-    </div>
-  </div>
-</body>
-</html>
-""",
-        status_code=200,
-    )
-
-
-@app.post("/report/build-and-open")
-def report_build_and_open():
-    build_report()
-    return RedirectResponse(url="/report/html", status_code=303)
-
-
-# -----------------------------------------------------------------------------
 # Build report (kept; your report depends on its outputs + manifest)
 # -----------------------------------------------------------------------------
 @app.post("/report/build")
@@ -667,27 +614,6 @@ def build_report():
         json.dump(manifest, f, indent=2)
 
     return {"status": "ok", **manifest}
-
-
-# -----------------------------------------------------------------------------
-# File serving for the report's <img src="/report/..."> links
-# (Kept: required for HTML report to display images.)
-# -----------------------------------------------------------------------------
-@app.get("/report/figures/{filename}")
-def get_report_figure(filename: str):
-    filename = _safe_filename(filename)
-    path = FIG_DIR / filename
-    _require(path, "Report figure")
-    return FileResponse(path, media_type=_guess_media_type(filename), filename=filename)
-
-
-@app.get("/report/examples/{filename}")
-def get_example_figure(filename: str):
-    filename = _safe_filename(filename)
-    path = EXAMPLE_DIR / filename
-    _require(path, "Example figure")
-    return FileResponse(path, media_type=_guess_media_type(filename), filename=filename)
-
 
 # -----------------------------------------------------------------------------
 # HTML report 
@@ -1011,25 +937,8 @@ REPORT_HTML_TEMPLATE = """<!doctype html>
 </html>
 """
 
-
-@app.get("/report/html", response_class=HTMLResponse)
-def report_html():
-    if not MANIFEST_PATH.exists():
-        raise HTTPException(status_code=400, detail="No report manifest yet. POST /report/build first.")
-
-    with open(MANIFEST_PATH, "r", encoding="utf-8") as f:
-        manifest = json.load(f)
-
-    generated_at = html.escape(str(manifest.get("generated_at_utc", "")))
-    inputs_pretty = html.escape(json.dumps(manifest.get("inputs", {}), indent=2, sort_keys=True))
-
-    html_doc = REPORT_HTML_TEMPLATE.format(
-        generated_at=generated_at,
-        inputs_pretty=inputs_pretty,
-    )
-    return HTMLResponse(content=html_doc, status_code=200)
-
 @app.post("/report/build-and-open")
 def report_build_and_open():
     build_report()  # existing function — do not rewrite
     return RedirectResponse(url="/report/html", status_code=303)
+
